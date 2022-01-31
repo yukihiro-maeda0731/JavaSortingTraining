@@ -4,6 +4,8 @@ import com.example.JavaSortingTraining.model.Pokemon;
 //import com.example.JavaSortingTraining.model.Trainer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,9 +22,11 @@ public class JavaSortingTrainingApplication {
 		RestTemplate rest = new RestTemplate();
 		String url = "https://pokeapi.co/api/v2/pokemon/pikachu/";
 
-		ResponseEntity<String> response = rest.getForEntity(url, String.class);
+		ResponseEntity<Object> response = rest.exchange(url,  HttpMethod.GET,
+				null, new ParameterizedTypeReference<>() {
+				});
 
-		String json = response.getBody();
+		Object json =  response.getBody();
 
 		System.out.println(json);
 
